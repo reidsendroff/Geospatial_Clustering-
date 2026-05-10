@@ -1,5 +1,55 @@
 # Visualization Catalog
 
+## Social Preview Image
+
+GitHub shows a 1280×640 px card when the repo URL is shared on LinkedIn, Slack, or Twitter.
+The default is a generic GitHub tile. Run the script below once (after exporting the 3 plot
+images) to generate a custom card that puts the headline result front and center.
+
+Add this as a new cell at the end of the notebook, or run it as a standalone script:
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
+fig, ax = plt.subplots(figsize=(12.8, 6.4), facecolor="#0d1117")
+ax.set_xlim(0, 12.8)
+ax.set_ylim(0, 6.4)
+ax.axis("off")
+
+# Title
+ax.text(6.4, 4.5, "Crime Hotspot Clustering",
+        ha="center", va="center", fontsize=40, color="white", fontweight="bold")
+
+# Subtitle
+ax.text(6.4, 3.65, "HDBSCAN · ST-DBSCAN · KDE  |  Chicago Crime Data  |  Python",
+        ha="center", va="center", fontsize=18, color="#8b949e")
+
+# Stat chips
+for x, label in zip([2.5, 6.4, 10.3],
+                    ["100k incidents", "PAI@5% = 16.23%", "3.25x lift"]):
+    ax.add_patch(mpatches.FancyBboxPatch(
+        (x - 1.5, 2.1), 3.0, 0.9,
+        boxstyle="round,pad=0.1", facecolor="#21262d", edgecolor="#30363d"))
+    ax.text(x, 2.55, label, ha="center", va="center",
+            fontsize=15, color="#58a6ff", fontweight="bold")
+
+import os
+os.makedirs("images", exist_ok=True)
+plt.tight_layout(pad=0)
+plt.savefig("images/social_preview.png", dpi=100, bbox_inches="tight",
+            facecolor="#0d1117")
+plt.show()
+print("Saved: images/social_preview.png")
+```
+
+After running, upload the image at:
+**github.com/reidsendroff/Geospatial_Clustering- → Settings → Social preview → Edit → Upload image**
+
+The `gh` CLI does not support binary uploads — browser upload is required.
+
+---
+
 This directory holds exported static images from `Project_Plan_Crime_Hotspot_Clustering.ipynb`.
 All plots below are generated during notebook execution. Add the `plt.savefig(...)` line
 shown for each cell **before** `plt.show()` to export them.
